@@ -1,7 +1,7 @@
 <b><%#= Time.now.strftime("%b %Y") %></b>
 
 <%= calender year: params[:year], month: params[:month],
-object: @feed_items do |date| %>
+object: (@feed_items || @microposts) do |date| %>
     <%# binding.pry %>
     <%= date.html_safe %>
     <%#= "hello" %>

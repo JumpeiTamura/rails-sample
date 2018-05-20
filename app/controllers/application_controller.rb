@@ -12,4 +12,9 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def time
+    params[:year] ||= Time.now.year
+    params[:month] ||= Time.now.month
+  end
+
 end

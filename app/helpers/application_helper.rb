@@ -35,6 +35,7 @@ module ApplicationHelper
     #  a += "</#{t}>"
     #end
     StringIO.open do |sio|
+      #binding.pry
       year, month = hash[:year].to_i, hash[:month].to_i
       first = DateTime.new(year, month, 1)
       last = DateTime.new(year, month, -1)
