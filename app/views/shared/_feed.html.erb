@@ -1,0 +1,5 @@
+<% if @feed_items.any? %>
+    <% @microposts = @feed_items unless @microposts %>    
+	<ol><%= render @microposts %></ol>
+    <%= will_paginate @microposts %>
+<% end %>

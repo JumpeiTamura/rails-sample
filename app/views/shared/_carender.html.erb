@@ -1,0 +1,10 @@
+<b><%#= Time.now.strftime("%b %Y") %></b>
+
+<%= calender year: params[:year], month: params[:month], object: @feed_items do |date| %>
+    <%# binding.pry %>
+    <%= date.html_safe %>
+    <%#= "hello" %>
+    <%# posts.each do |post| %>
+    <%# first = @feed_items.first %>
+    <%#= link_to 'hello', first %>
+<% end %>

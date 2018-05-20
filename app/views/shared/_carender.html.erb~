@@ -1,0 +1,9 @@
+<b><%= Time.now.strftime("%b %Y") %><b>
+
+<%= carender collection: @feeds, column: :posted_on do |date, posts| %>
+    <%# posts.each do |post| %>
+	<%#= link_to date, post %>
+    <%# end %>
+    <%= link_to(date, @feeds) %>
+    <%= p date,posts %>
+<% end %>

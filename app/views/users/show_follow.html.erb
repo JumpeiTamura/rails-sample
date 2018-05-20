@@ -1,0 +1,18 @@
+<% provide(:title, @title) %>
+
+<h1><%= @user.name %></h1>
+<span><%= link_to "view my profile", @user %></span>
+<span><b>Microposts:</b><%= @user.microposts.count %></span>
+<%= render 'shared/stats' %>
+<% if @users.any? %>
+    <% @users.each do |user| %>
+	<%= link_to user.name, user %>
+    <% end %>
+<% end %>
+
+<h3><%= @title %></h3>
+<% if @users.any? %>
+    <ul><%= render @users %></ul>
+    <%= will_paginate %>
+<% end %>
+

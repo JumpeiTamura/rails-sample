@@ -1,0 +1,62 @@
+# coding: utf-8
+module ApplicationHelper
+
+  def put_tag(sio, tag, **options)
+    if block_given?
+      sio.print "<#{tag}>"
+      yield
+      sio.print "</#{tag}>"  
+    elsif ary = options[:ary]
+      ary.each do |str|
+        put_tag(sio, tag) do
+          if str.class == DateTime
+            day = str.mday
+            if object = options[:object]
+              #sio.print object.updated_at.beginning_of_day
+              #if object.updated_at.beginning_of_day == str
+                unless object.where("updated_at BETWEEN ? AND ?",
+                                    str, str.end_of_day).empty?
+                  sio.print(link_to(day, root_url(day: str)))
+                  next
+                end
+            end
+            sio.print day; next;
+          end
+          sio.print str
+        end       
+      end
+    else
+      sio.puts "<#{tag}>"
+    end
+  end
+  
+  def calender(**hash)
+    #tag = ->(a,t) do
+    #  a += "</#{t}>"
+    #end
+    StringIO.open do |sio|
+      year, month = hash[:year],hash[:month]
+      first = DateTime.new(year, month, 1)
+      last = DateTime.new(year, month, -1)
+      put_tag(sio, :h3) do
+        sio.puts "#{first.strftime('%B')} #{year}"
+      end
+      #put_tag(sio, :br)
+      put_tag(sio, :table) do
+        #tag.call(ret, :br)
+        wdays = %w(sun mon tue wed thi fri sat)
+        put_tag(sio, :tr) do
+          put_tag(sio, :td, ary: wdays)
+        end
+        ary = (first..last).to_a
+        first.wday.times{ ary.unshift("") }
+        ary.each_slice(7) do |day|
+          put_tag(sio, :tr) do
+            put_tag(sio, :td, ary: day, object: hash[:object])
+          end
+        end
+      end
+      yield(sio.string)
+    end
+  end
+end
