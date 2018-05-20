@@ -35,17 +35,12 @@ module ApplicationHelper
     #  a += "</#{t}>"
     #end
     StringIO.open do |sio|
-      year, month = hash[:year].to_i, hash[:month].to_i
+      year, month = hash[:year],hash[:month]
       first = DateTime.new(year, month, 1)
       last = DateTime.new(year, month, -1)
-      pre_mon = first << 1
-      next_mon = first >> 1
       put_tag(sio, :h3) do
-        sio.print link_to("<",root_path(year: pre_mon.year,
-                                        month: pre_mon.month))
-        sio.puts first.strftime('%B %Y')
-        sio.print link_to(">",root_path(year: next_mon.year,
-                                        month: next_mon.month))
+        sio.print 
+        sio.puts "#{first.strftime('%B')} #{year}"
       end
       #put_tag(sio, :br)
       put_tag(sio, :table) do
